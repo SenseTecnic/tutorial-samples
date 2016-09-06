@@ -1,0 +1,114 @@
+[
+    {
+        "id": "eb923c67.49e73",
+        "type": "websocket in",
+        "z": "87394a82.590968",
+        "name": "",
+        "server": "b7aff9e4.169148",
+        "client": "",
+        "x": 199,
+        "y": 185,
+        "wires": [
+            [
+                "af42d30e.17711",
+                "f11873fc.66e48"
+            ]
+        ]
+    },
+    {
+        "id": "af42d30e.17711",
+        "type": "debug",
+        "z": "87394a82.590968",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 457,
+        "y": 139,
+        "wires": []
+    },
+    {
+        "id": "b966d569.b25928",
+        "type": "http in",
+        "z": "87394a82.590968",
+        "name": "",
+        "url": "/public/chatroom",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 337,
+        "wires": [
+            [
+                "e9f38850.4bc358"
+            ]
+        ]
+    },
+    {
+        "id": "e9f38850.4bc358",
+        "type": "template",
+        "z": "87394a82.590968",
+        "name": "Chatroom HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "<!doctype html>\n<html lang=\"en\">\n<head>\n <meta charset=\"utf-8\">\n <title>FRED-powered chat app</title>\n <script src=\"http://code.jquery.com/jquery-1.11.3.min.js\"></script>\n <script src=\"http:///code.jquery.com/jquery-migrate-1.2.1.min.js\"></script>\n <style>\n #messages {border-color:#999; border-style:solid; width:250px; min-height:200px; margin:5px;}\n .msg {color:#FFF; background-color:#2980B9; padding:2px; margin:2px;}\n .server {color:#999; background-color:white; font-size:small;}\n #form {margin:5px;}\n #form input {width:250px;}\n </style>\n</head>\n<body>\n <div id=\"messages\"></div>\n <form id=\"form\" onsubmit=\"return false;\">\n <input id=\"text\" type=\"text\" onkeypress=\"return sendText(event)\" />\n </form>\n \n <script type=\"text/javascript\">\n \n // Open a websocket using FRED.\n var publishSocket = new WebSocket(\"ws://fred.sensetecnic.com/public/{yourusername}/messagereceive\");\n var listenSocket = new WebSocket(\"ws://fred.sensetecnic.com/public/{yourusername}/messagepublish\");\n \n listenSocket.onmessage = function (event) {\n // When receiving a message append a div child to #messages\n data = JSON.parse(event.data);\n $(\"#messages\").append(\"<div class='msg' >\"+data.timestamp+\" - \"+data.msg+\"</div>\")\n if ($(\"#messages\").children().length > 10 ) { $(\"#messages :first-child\").remove()}\n }\n \n listenSocket.onclose = function(event){\n $(\"#messages\").append(\"<div class='msg server'>Disconnected from server.</div>\");\n }\n \n listenSocket.onopen = function(event){\n $(\"#messages\").append(\"<div class='msg server'>Connected to server.</div>\")\n }\n \n function sendText(event) {\n // Only if return key pressed\n if (event.keyCode == 13) {\n // Construct object containing the data the server needs.\n d = new Date();\n var data = {\n msg: $(\"#text\").val(),\n timestamp: d.getHours() +\":\"+ d.getMinutes() + \":\" + d.getSeconds()\n };\n // Send the msg object as a JSON-formatted string.\n publishSocket.send(JSON.stringify(data));\n // Blank the text input element\n $(\"#text\").val(\"\");\n }\n }\n </script>\n \n</body>\n</html>",
+        "x": 379,
+        "y": 398,
+        "wires": [
+            [
+                "d48ad141.db2f9"
+            ]
+        ]
+    },
+    {
+        "id": "d48ad141.db2f9",
+        "type": "http response",
+        "z": "87394a82.590968",
+        "name": "",
+        "x": 492,
+        "y": 343,
+        "wires": []
+    },
+    {
+        "id": "f11873fc.66e48",
+        "type": "function",
+        "z": "87394a82.590968",
+        "name": "",
+        "func": "return {payload: JSON.parse(msg.payload)};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 378,
+        "y": 259,
+        "wires": [
+            [
+                "df28add7.a73c7"
+            ]
+        ]
+    },
+    {
+        "id": "df28add7.a73c7",
+        "type": "websocket out",
+        "z": "87394a82.590968",
+        "name": "",
+        "server": "a3eb30ea.807f8",
+        "client": "",
+        "x": 559,
+        "y": 207,
+        "wires": []
+    },
+    {
+        "id": "b7aff9e4.169148",
+        "type": "websocket-listener",
+        "z": "87394a82.590968",
+        "path": "/public/messagereceive",
+        "wholemsg": "false"
+    },
+    {
+        "id": "a3eb30ea.807f8",
+        "type": "websocket-listener",
+        "z": "87394a82.590968",
+        "path": "/public/messagepublish",
+        "wholemsg": "false"
+    }
+]

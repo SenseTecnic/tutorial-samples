@@ -1,0 +1,37 @@
+[
+    {
+        "id": "b50e2f45.056d",
+        "type": "fred in",
+        "z": "87394a82.590968",
+        "name": "Receive from Cloud Via rjlTest2",
+        "server": "586ff0dd.14abc",
+        "client": "",
+        "x": 212.5,
+        "y": 208,
+        "wires": [
+            [
+                "7de22e43.008"
+            ]
+        ]
+    },
+    {
+        "id": "7de22e43.008",
+        "type": "debug",
+        "z": "87394a82.590968",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 379.5,
+        "y": 263,
+        "wires": []
+    },
+    {
+        "id": "586ff0dd.14abc",
+        "type": "fred-server",
+        "z": "87394a82.590968",
+        "endpoint": "rjlTest2",
+        "private": false,
+        "wholemsg": "false"
+    }
+]

@@ -1,0 +1,57 @@
+[
+    {
+        "id": "959cc1ad.87437",
+        "type": "inject",
+        "z": "87394a82.590968",
+        "name": "",
+        "topic": "",
+        "payload": "Hello from FRED",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 133,
+        "y": 103,
+        "wires": [
+            [
+                "57924bd.df9f6b4"
+            ]
+        ]
+    },
+    {
+        "id": "57924bd.df9f6b4",
+        "type": "dweetio out",
+        "z": "87394a82.590968",
+        "thing": "thingName",
+        "name": "",
+        "x": 245,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b02c3f87.4a12f",
+        "type": "dweetio in",
+        "z": "87394a82.590968",
+        "thing": "thingName",
+        "name": "",
+        "x": 130,
+        "y": 248,
+        "wires": [
+            [
+                "f33744b6.d61dc8"
+            ]
+        ]
+    },
+    {
+        "id": "f33744b6.d61dc8",
+        "type": "debug",
+        "z": "87394a82.590968",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 296,
+        "y": 280,
+        "wires": []
+    }
+]

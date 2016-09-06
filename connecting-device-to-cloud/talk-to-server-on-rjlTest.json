@@ -1,0 +1,40 @@
+[
+    {
+        "id": "c74b0e90.cb017",
+        "type": "fred out",
+        "z": "87394a82.590968",
+        "name": "Talk to FRED on rjlTest",
+        "server": "2344090e.b7f726",
+        "client": "",
+        "x": 363.5,
+        "y": 206,
+        "wires": []
+    },
+    {
+        "id": "6a996160.9a14d",
+        "type": "inject",
+        "z": "87394a82.590968",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 138.5,
+        "y": 147,
+        "wires": [
+            [
+                "c74b0e90.cb017"
+            ]
+        ]
+    },
+    {
+        "id": "2344090e.b7f726",
+        "type": "fred-server",
+        "z": "87394a82.590968",
+        "endpoint": "rjlTest",
+        "private": false,
+        "wholemsg": "false"
+    }
+]

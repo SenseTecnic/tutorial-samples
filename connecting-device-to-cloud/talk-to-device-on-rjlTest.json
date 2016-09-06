@@ -1,0 +1,37 @@
+[
+    {
+        "id": "5ad6ea.ff92d918",
+        "type": "fred in",
+        "z": "87394a82.590968",
+        "name": "Talk do device",
+        "server": "2344090e.b7f726",
+        "client": "",
+        "x": 169.5,
+        "y": 167,
+        "wires": [
+            [
+                "9eee73e7.8962"
+            ]
+        ]
+    },
+    {
+        "id": "9eee73e7.8962",
+        "type": "debug",
+        "z": "87394a82.590968",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 330.5,
+        "y": 213,
+        "wires": []
+    },
+    {
+        "id": "2344090e.b7f726",
+        "type": "fred-server",
+        "z": "87394a82.590968",
+        "endpoint": "rjlTest",
+        "private": false,
+        "wholemsg": "false"
+    }
+]
