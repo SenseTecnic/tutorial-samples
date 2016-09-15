@@ -1,0 +1,164 @@
+[
+    {
+        "id": "fd347a90.e36568",
+        "type": "litedb",
+        "z": "cba366f7.12fae8",
+        "name": "",
+        "x": 538.5,
+        "y": 151,
+        "wires": [
+            [
+                "329a8122.9cdffe",
+                "95ee3480.7a0f68"
+            ]
+        ]
+    },
+    {
+        "id": "40ce89ec.297be8",
+        "type": "inject",
+        "z": "cba366f7.12fae8",
+        "name": "create database table",
+        "topic": "CREATE TABLE RANDOMNUM( TIMESTAMP INT PRIMARY KEY NOT NULL, VALUE INT NOT NULL, BOOL INT NOT NULL)",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 151.5,
+        "y": 82,
+        "wires": [
+            [
+                "fd347a90.e36568"
+            ]
+        ]
+    },
+    {
+        "id": "329a8122.9cdffe",
+        "type": "debug",
+        "z": "cba366f7.12fae8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 728.5,
+        "y": 112,
+        "wires": []
+    },
+    {
+        "id": "68977d13.c70564",
+        "type": "inject",
+        "z": "cba366f7.12fae8",
+        "name": "insert data",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "15",
+        "crontab": "",
+        "once": false,
+        "x": 126.5,
+        "y": 224,
+        "wires": [
+            [
+                "175b9dcd.a68c62"
+            ]
+        ]
+    },
+    {
+        "id": "175b9dcd.a68c62",
+        "type": "function",
+        "z": "cba366f7.12fae8",
+        "name": "write query",
+        "func": "var randomNum = Math.round(Math.random()*100);\nvar largeBool = (randomNum > 50)?1:0;\nvar newMsg = {\n \"topic\": \"INSERT INTO RANDOMNUM VALUES ( \" + msg.payload + \", \" + randomNum + \", \" + largeBool + \")\"\n}\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 286.5,
+        "y": 158,
+        "wires": [
+            [
+                "fd347a90.e36568"
+            ]
+        ]
+    },
+    {
+        "id": "700fee84.01f47",
+        "type": "inject",
+        "z": "cba366f7.12fae8",
+        "name": "view records",
+        "topic": "SELECT * FROM RANDOMNUM ORDER BY TIMESTAMP DESC LIMIT 100;",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 122.5,
+        "y": 300,
+        "wires": [
+            [
+                "fd347a90.e36568"
+            ]
+        ]
+    },
+    {
+        "id": "983e5775.e78ae8",
+        "type": "inject",
+        "z": "cba366f7.12fae8",
+        "name": "delete records",
+        "topic": "DELETE FROM RANDOMNUM WHERE TIMESTAMP <= strftime('%s','now', '-1 hours')*1000",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 122.5,
+        "y": 370,
+        "wires": [
+            [
+                "fd347a90.e36568"
+            ]
+        ]
+    },
+    {
+        "id": "6be71875.932928",
+        "type": "inject",
+        "z": "cba366f7.12fae8",
+        "name": "show counts ",
+        "topic": "SELECT COUNT(*) FROM RANDOMNUM",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 135.5,
+        "y": 433,
+        "wires": [
+            [
+                "fd347a90.e36568"
+            ]
+        ]
+    },
+    {
+        "id": "95ee3480.7a0f68",
+        "type": "ui_template",
+        "z": "cba366f7.12fae8",
+        "tab": "4d06f9cc.52f378",
+        "name": "UI Table",
+        "group": "",
+        "order": 1,
+        "format": "<table style=\"width:100%\">\n  <tr>\n    <th>Index</th> \n    <th>Timestamp</th>\n    <th>Value</th> \n    <th>Bool</th>\n  </tr>\n  <tr ng-repeat=\"x in msg.payload | limitTo:20\">\n    <td>{{$index}}</td>\n    <td>{{msg.payload[$index].TIMESTAMP}}</td>\n    <td>{{msg.payload[$index].VALUE}}</td> \n    <td>{{msg.payload[$index].BOOL}}</td>\n  </tr>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 731.5,
+        "y": 189,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d06f9cc.52f378",
+        "type": "ui_tab",
+        "z": "cba366f7.12fae8",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": "1"
+    }
+]
