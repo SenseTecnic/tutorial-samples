@@ -1,0 +1,116 @@
+[
+    {
+        "id": "65943886.2a7fa8",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 140,
+        "y": 114,
+        "wires": [
+            [
+                "2b682d49.ed9462"
+            ]
+        ]
+    },
+    {
+        "id": "2b682d49.ed9462",
+        "type": "fred out",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "1795a272.f0faee",
+        "client": "",
+        "x": 392,
+        "y": 114,
+        "wires": []
+    },
+    {
+        "id": "b8bc56d8.b36958",
+        "type": "fred in",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "38439352.849a0c",
+        "client": "",
+        "x": 157,
+        "y": 190,
+        "wires": [
+            [
+                "f9284830.12c608"
+            ]
+        ]
+    },
+    {
+        "id": "f9284830.12c608",
+        "type": "json",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "x": 311,
+        "y": 257,
+        "wires": [
+            [
+                "c65c0afc.e29588",
+                "184d3ff6.e3d7"
+            ]
+        ]
+    },
+    {
+        "id": "c65c0afc.e29588",
+        "type": "debug",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 455,
+        "y": 317,
+        "wires": []
+    },
+    {
+        "id": "184d3ff6.e3d7",
+        "type": "ui_chart",
+        "z": "7ea2f961.7447b8",
+        "tab": "a1b7478f.1b3038",
+        "name": "",
+        "group": "",
+        "order": 1,
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "removeOlder": 1,
+        "removeOlderUnit": "86400",
+        "x": 443,
+        "y": 371,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1795a272.f0faee",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikADCSend",
+        "private": false,
+        "wholemsg": "false"
+    },
+    {
+        "id": "38439352.849a0c",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikADCReceive",
+        "private": false,
+        "wholemsg": "false"
+    },
+    {
+        "id": "a1b7478f.1b3038",
+        "type": "ui_tab",
+        "z": "7ea2f961.7447b8",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": "1"
+    }
+]

@@ -1,0 +1,126 @@
+[
+    {
+        "id": "9cc4465d.0abda8",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 122,
+        "y": 136,
+        "wires": [
+            [
+                "a7b43672.12b878"
+            ]
+        ]
+    },
+    {
+        "id": "600eacae.f6e114",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 120,
+        "y": 199,
+        "wires": [
+            [
+                "1c20a5e4.7bf53a"
+            ]
+        ]
+    },
+    {
+        "id": "3fd332fd.dc87ee",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 118,
+        "y": 258,
+        "wires": [
+            [
+                "ac0a7e70.da68a"
+            ]
+        ]
+    },
+    {
+        "id": "a7b43672.12b878",
+        "type": "function",
+        "z": "7ea2f961.7447b8",
+        "name": "on",
+        "func": "var newMsg = {\n    payload:{\n       state:1,\n       period:1000000000,\n       dutyCycle:500000000\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 334,
+        "y": 165,
+        "wires": [
+            [
+                "e83daab1.c0bac8"
+            ]
+        ]
+    },
+    {
+        "id": "1c20a5e4.7bf53a",
+        "type": "function",
+        "z": "7ea2f961.7447b8",
+        "name": "off",
+        "func": "var newMsg = {\n    payload:{\n       state:0\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 334,
+        "y": 246,
+        "wires": [
+            [
+                "e83daab1.c0bac8"
+            ]
+        ]
+    },
+    {
+        "id": "ac0a7e70.da68a",
+        "type": "function",
+        "z": "7ea2f961.7447b8",
+        "name": "otherway",
+        "func": "var newMsg = {\n    payload:{\n       state:1,\n       period: 1000000000,\n       dutyCycle: 1000\n    }\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 354,
+        "y": 327,
+        "wires": [
+            [
+                "e83daab1.c0bac8"
+            ]
+        ]
+    },
+    {
+        "id": "e83daab1.c0bac8",
+        "type": "fred out",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "65bdc91.da27938",
+        "client": "",
+        "x": 609,
+        "y": 247,
+        "wires": []
+    },
+    {
+        "id": "65bdc91.da27938",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikPWMSend",
+        "private": false,
+        "wholemsg": "false"
+    }
+]

@@ -1,0 +1,88 @@
+[
+    {
+        "id": "65943886.2a7fa8",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 140,
+        "y": 114,
+        "wires": [
+            [
+                "2b682d49.ed9462"
+            ]
+        ]
+    },
+    {
+        "id": "2b682d49.ed9462",
+        "type": "fred out",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "b439c00d.fc7b1",
+        "client": "",
+        "x": 382,
+        "y": 114,
+        "wires": []
+    },
+    {
+        "id": "b8bc56d8.b36958",
+        "type": "fred in",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "d00907c.36b12f8",
+        "client": "",
+        "x": 147,
+        "y": 190,
+        "wires": [
+            [
+                "f9284830.12c608"
+            ]
+        ]
+    },
+    {
+        "id": "f9284830.12c608",
+        "type": "json",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "x": 301,
+        "y": 264,
+        "wires": [
+            [
+                "c65c0afc.e29588"
+            ]
+        ]
+    },
+    {
+        "id": "c65c0afc.e29588",
+        "type": "debug",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 455,
+        "y": 317,
+        "wires": []
+    },
+    {
+        "id": "b439c00d.fc7b1",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikInSend",
+        "private": false,
+        "wholemsg": "false"
+    },
+    {
+        "id": "d00907c.36b12f8",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikInReceive",
+        "private": false,
+        "wholemsg": "false"
+    }
+]

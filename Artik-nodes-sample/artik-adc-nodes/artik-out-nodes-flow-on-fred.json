@@ -1,0 +1,91 @@
+[
+    {
+        "id": "d303cf0f.46371",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 118,
+        "y": 82,
+        "wires": [
+            [
+                "2847a02d.b2e09"
+            ]
+        ]
+    },
+    {
+        "id": "cf1b9106.10263",
+        "type": "inject",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 115,
+        "y": 145,
+        "wires": [
+            [
+                "e64e6142.12a86"
+            ]
+        ]
+    },
+    {
+        "id": "2847a02d.b2e09",
+        "type": "function",
+        "z": "7ea2f961.7447b8",
+        "name": "HIGH",
+        "func": "msg.payload = {\n    state:1\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 276,
+        "y": 84,
+        "wires": [
+            [
+                "ba1265f2.33e788"
+            ]
+        ]
+    },
+    {
+        "id": "e64e6142.12a86",
+        "type": "function",
+        "z": "7ea2f961.7447b8",
+        "name": "LOW",
+        "func": "msg.payload = {\n    state:0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 277,
+        "y": 142,
+        "wires": [
+            [
+                "ba1265f2.33e788"
+            ]
+        ]
+    },
+    {
+        "id": "ba1265f2.33e788",
+        "type": "fred out",
+        "z": "7ea2f961.7447b8",
+        "name": "",
+        "server": "5a020af7.4d4e74",
+        "client": "",
+        "x": 512,
+        "y": 113,
+        "wires": []
+    },
+    {
+        "id": "5a020af7.4d4e74",
+        "type": "fred-server",
+        "z": "7ea2f961.7447b8",
+        "endpoint": "artikOut",
+        "private": false,
+        "wholemsg": "false"
+    }
+]
