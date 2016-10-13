@@ -1,0 +1,151 @@
+[
+    {
+        "id": "ff9fafff.553ec",
+        "type": "inject",
+        "z": "50b043f1.129efc",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "x": 108,
+        "y": 128,
+        "wires": [
+            [
+                "33c90cf1.7f67b4"
+            ]
+        ]
+    },
+    {
+        "id": "33c90cf1.7f67b4",
+        "type": "function",
+        "z": "50b043f1.129efc",
+        "name": "Random number",
+        "func": "msg.payload = Math.round(Math.random()*100);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 254,
+        "y": 195,
+        "wires": [
+            [
+                "ac7a5b30.c88c38",
+                "7ddd4a0d.3fdf84",
+                "41693a34.1aa2f4",
+                "cc747179.ae834"
+            ]
+        ]
+    },
+    {
+        "id": "ac7a5b30.c88c38",
+        "type": "ui_chart",
+        "z": "50b043f1.129efc",
+        "name": "",
+        "group": "b331f28d.abb6d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "%H:%M:%S",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderUnit": "60",
+        "x": 455,
+        "y": 214,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7ddd4a0d.3fdf84",
+        "type": "ui_gauge",
+        "z": "50b043f1.129efc",
+        "name": "",
+        "group": "b331f28d.abb6d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 461,
+        "y": 277,
+        "wires": []
+    },
+    {
+        "id": "41693a34.1aa2f4",
+        "type": "ui_slider",
+        "z": "50b043f1.129efc",
+        "name": "",
+        "label": "slider",
+        "group": "86ec7e92.eeb6a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": 0,
+        "max": "100",
+        "x": 462,
+        "y": 346,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cc747179.ae834",
+        "type": "ui_text",
+        "z": "50b043f1.129efc",
+        "group": "86ec7e92.eeb6a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 465,
+        "y": 404,
+        "wires": []
+    },
+    {
+        "id": "b331f28d.abb6d",
+        "type": "ui_group",
+        "z": "50b043f1.129efc",
+        "name": "Default",
+        "tab": "2821c665.04410a",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "86ec7e92.eeb6a",
+        "type": "ui_group",
+        "z": "50b043f1.129efc",
+        "name": "anotherWidget",
+        "tab": "2821c665.04410a",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2821c665.04410a",
+        "type": "ui_tab",
+        "z": "50b043f1.129efc",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
