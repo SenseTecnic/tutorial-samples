@@ -1,0 +1,725 @@
+[
+    {
+        "id": "a2cf81e5.5b32e",
+        "type": "tab",
+        "label": "Messenger to FRED"
+    },
+    {
+        "id": "243db0ff.8861e",
+        "type": "tab",
+        "label": "FRED to Watson"
+    },
+    {
+        "id": "bd8c0993.1b12d8",
+        "type": "tab",
+        "label": "FRED to Walmart API"
+    },
+    {
+        "id": "d830f52.04c5908",
+        "type": "chatbot-telegram-node",
+        "z": "",
+        "botname": "sts-testing-bot",
+        "usernames": "",
+        "polling": "1000",
+        "log": ""
+    },
+    {
+        "id": "38b3250.6b57fdc",
+        "type": "chatbot-telegram-receive",
+        "z": "a2cf81e5.5b32e",
+        "bot": "",
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "21b18034.00031"
+            ]
+        ]
+    },
+    {
+        "id": "47c7b5fd.08305c",
+        "type": "change",
+        "z": "a2cf81e5.5b32e",
+        "name": "save telegramBot msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "telegramBot",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 140,
+        "wires": [
+            [
+                "838d4d2e.e3f07"
+            ]
+        ]
+    },
+    {
+        "id": "21b18034.00031",
+        "type": "function",
+        "z": "a2cf81e5.5b32e",
+        "name": "look up user context maps",
+        "func": "if(msg.payload.chatId){\n    var userContext = global.get('telegram-'+msg.payload.chatId);\n}\nmsg.userContext = userContext;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 140,
+        "wires": [
+            [
+                "47c7b5fd.08305c"
+            ]
+        ]
+    },
+    {
+        "id": "838d4d2e.e3f07",
+        "type": "link out",
+        "z": "a2cf81e5.5b32e",
+        "name": "",
+        "links": [
+            "956464be.6fd538"
+        ],
+        "x": 775,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "754e95d4.8decec",
+        "type": "link in",
+        "z": "a2cf81e5.5b32e",
+        "name": "",
+        "links": [
+            "6764101.6a900f",
+            "68bd844e.88638c"
+        ],
+        "x": 195,
+        "y": 340,
+        "wires": [
+            [
+                "c9ce7d2d.210e5"
+            ]
+        ]
+    },
+    {
+        "id": "a51f1768.9bd7c8",
+        "type": "chatbot-telegram-send",
+        "z": "a2cf81e5.5b32e",
+        "bot": "",
+        "track": false,
+        "outputs": 0,
+        "x": 910,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d804a54d.584738",
+        "type": "function",
+        "z": "a2cf81e5.5b32e",
+        "name": "send back to telegram",
+        "func": "\nif(msg.watsonMsg.output.text[0]){\n    msg.telegramBot.content = msg.watsonMsg.output.text;\n} \n\n//combine msg back to telegramBot msg\nmsg.payload = msg.telegramBot;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 340,
+        "wires": [
+            [
+                "a51f1768.9bd7c8"
+            ]
+        ]
+    },
+    {
+        "id": "c9ce7d2d.210e5",
+        "type": "function",
+        "z": "a2cf81e5.5b32e",
+        "name": "save conversation context by mapping chatId",
+        "func": "//save context info by mapping the chat id\nvar contextObject={}\n\nif(!msg.telegramBot){\n    contextObject.telegramBot=msg.userContext.telegramBot;\n} else {\n    contextObject.telegramBot=msg.telegramBot;\n}\n\nif(!msg.watsonMsg){\n    contextObject.watsonMsg=msg.userContext.watsonMsg;\n} else {\n    contextObject.watsonMsg=msg.watsonMsg;\n}\n\nif(!msg.searchResult){\n    if(msg.userContext && msg.userContext.searchResult){\n        contextObject.searchResult = msg.userContext.searchResult;\n    }\n} else {\n    contextObject.searchResult = msg.searchResult;\n}\n\nglobal.set(\"telegram-\"+msg.telegramBot.chatId, contextObject);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 340,
+        "wires": [
+            [
+                "d804a54d.584738"
+            ]
+        ]
+    },
+    {
+        "id": "956464be.6fd538",
+        "type": "link in",
+        "z": "243db0ff.8861e",
+        "name": "",
+        "links": [
+            "838d4d2e.e3f07"
+        ],
+        "x": 215,
+        "y": 120,
+        "wires": [
+            [
+                "58fdb02b.7dd35"
+            ]
+        ]
+    },
+    {
+        "id": "c03f23d3.0c457",
+        "type": "watson-conversation-v1",
+        "z": "243db0ff.8861e",
+        "name": "",
+        "workspaceid": "",
+        "multiuser": false,
+        "context": true,
+        "x": 570,
+        "y": 120,
+        "wires": [
+            [
+                "e126a47.156b358"
+            ]
+        ]
+    },
+    {
+        "id": "e126a47.156b358",
+        "type": "change",
+        "z": "243db0ff.8861e",
+        "name": "save to watsonMsg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "watsonMsg",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 120,
+        "wires": [
+            [
+                "820fc1a4.e22c5"
+            ]
+        ]
+    },
+    {
+        "id": "58fdb02b.7dd35",
+        "type": "change",
+        "z": "243db0ff.8861e",
+        "name": "prepare to send to watson",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "telegramBot.content",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 120,
+        "wires": [
+            [
+                "c03f23d3.0c457"
+            ]
+        ]
+    },
+    {
+        "id": "820fc1a4.e22c5",
+        "type": "link out",
+        "z": "243db0ff.8861e",
+        "name": "",
+        "links": [
+            "3e5d4139.641e2e",
+            "44973d18.e074f4"
+        ],
+        "x": 895,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "81a4904c.874d2",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "retrive item number",
+        "func": "var foundItem = false;\nif(msg.userContext && msg.userContext.searchResult){\n    if(msg.payload.entities){\n        msg.payload.entities.forEach(function(item){\n            if(item.entity == \"itemNumber\"){\n                var itemNum;\n                if(item.value >= 0 && item.value <= 4){\n                    itemNum = item.value;\n                } else {\n                    itemNum = msg.userContext.watsonMsg.itemNum;\n                }\n                msg.watsonMsg.itemNum = itemNum;\n      \n                foundItem = true;\n            }\n        })\n        if(!foundItem){\n            if(msg.userContext.watsonMsg.itemNum){\n                msg.watsonMsg.itemNum = msg.userContext.watsonMsg.itemNum;    \n            } else {\n                msg.watsonMsg.itemNum = \"\";\n            }\n        } \n    } \n} \nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "a8b22bb0.8bde68"
+            ]
+        ]
+    },
+    {
+        "id": "a8b22bb0.8bde68",
+        "type": "switch",
+        "z": "bd8c0993.1b12d8",
+        "name": "",
+        "property": "payload.intents[0].intent",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "searchItems",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "checkPrice",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "getDetails",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "getReviews",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "checkOnlineStock",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "order",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 7,
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "8236743b.c46b18"
+            ],
+            [
+                "4733883a.f34da8"
+            ],
+            [
+                "bcb7d4f7.196048"
+            ],
+            [
+                "a42f2c3a.63014"
+            ],
+            [
+                "5b1406a3.a968f8"
+            ],
+            [
+                "7f65e788.d5dce8"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "4733883a.f34da8",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "checkPrice",
+        "func": "if(msg.userContext.searchResult){\n    if(msg.watsonMsg.itemNum){\n        if(msg.userContext.searchResult.items[msg.watsonMsg.itemNum].salePrice){\n            msg.salePrice = msg.userContext.searchResult.items[msg.watsonMsg.itemNum].salePrice;\n        } else {\n            msg.salePrice = \"Sales price is unavailable\";\n        }\n        return([msg, null]);\n    } else {\n        console.log(\"item not found\");\n        msg.salePrice = msg.payload.output.text[0];\n        return( [null, msg] ); \n    } \n} else {\n    msg.salePrice = \"Can you be more specific in what you are looking for?\";\n    return([null,msg]);\n}\n\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 530,
+        "y": 140,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "8236743b.c46b18",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "searchItems",
+        "func": "\nvar foundItem = false;\n\nvar search_words =[];\nif(msg.watsonMsg.itemNum){\n    delete msg.watsonMsg.itemNum;\n}\n\nif (msg.payload.entities){\n    msg.payload.entities.forEach(function(item){\n        if(item.entity == 'category'){\n            if(search_words.length === 0){\n                search_words += item.value;\n            } else {\n                search_words += \"+\" + item.value;\n            }\n            foundItem = true;\n        }        \n    })\n    if(!foundItem){\n        console.log(\"category not found\");\n        node.send( [null, msg] ); \n    } else {\n        msg.searchItems = search_words;\n        node.send([msg, null]);\n    }\n    return;\n} else {\n    return [null, msg];\n}\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "169c8bd8.2a4ca4"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "bcb7d4f7.196048",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "getDetails",
+        "func": "if(msg.userContext.searchResult){\n    if(msg.watsonMsg.itemNum){\n        if(msg.userContext.searchResult.items[msg.watsonMsg.itemNum].shortDescription){\n            msg.details = msg.userContext.searchResult.items[msg.watsonMsg.itemNum].shortDescription;\n        } else {\n            msg.details = \"Sales price is unavailable\";\n        }\n        return([msg, null]);\n    } else {\n        console.log(\"item not found\");\n        msg.details = msg.payload.output.text[0];\n        return( [null, msg] ); \n    } \n} \n\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "a42f2c3a.63014",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "getReviews",
+        "func": "if(msg.userContext.searchResult){\n    if(msg.watsonMsg.itemNum){\n        if(msg.userContext.searchResult.items[msg.watsonMsg.itemNum].itemId){\n            // msg.url = searchItemUrl + msg.userContext.searchResult.items[msg.watsonMsg.itemNum].itemId + apiKey;\n            msg.itemId = msg.userContext.searchResult.items[msg.watsonMsg.itemNum].itemId;\n            node.send([msg,null]);\n            return;\n            \n        } else {\n            return([msg, null]);\n        }\n    } else {\n        return( [null, msg] ); \n    } \n} \n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "e94a78ff.dacc78"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "5b1406a3.a968f8",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "checkOnlineStock",
+        "func": "if(msg.userContext.searchResult){\n    if(msg.watsonMsg.itemNum){\n        if(msg.userContext.searchResult.items[msg.watsonMsg.itemNum].stock){\n            msg.stock = msg.userContext.searchResult.items[msg.watsonMsg.itemNum].stock;\n        } else {\n            msg.stock = \"Stock is unavailable\";\n        }\n        return([msg, null]);\n    } else {\n        console.log(\"item not found\");\n        msg.stock = msg.payload.output.text[0];\n        return( [null, msg] ); \n    } \n} \n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ],
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "7f65e788.d5dce8",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "order",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "4f50b84f.6a0338",
+        "type": "http request",
+        "z": "bd8c0993.1b12d8",
+        "name": "get result from walmart",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 980,
+        "y": 100,
+        "wires": [
+            [
+                "f1f11ebd.dd7d4"
+            ]
+        ]
+    },
+    {
+        "id": "f1f11ebd.dd7d4",
+        "type": "json",
+        "z": "bd8c0993.1b12d8",
+        "name": "",
+        "x": 1150,
+        "y": 100,
+        "wires": [
+            [
+                "57961b2b.b55004"
+            ]
+        ]
+    },
+    {
+        "id": "8c6d0627.e1b158",
+        "type": "http request",
+        "z": "bd8c0993.1b12d8",
+        "name": "get reviews",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1090,
+        "y": 300,
+        "wires": [
+            [
+                "803ef1bc.52093"
+            ]
+        ]
+    },
+    {
+        "id": "803ef1bc.52093",
+        "type": "json",
+        "z": "bd8c0993.1b12d8",
+        "name": "",
+        "x": 1230,
+        "y": 300,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "57961b2b.b55004",
+        "type": "change",
+        "z": "bd8c0993.1b12d8",
+        "name": "save searchResult",
+        "rules": [
+            {
+                "t": "set",
+                "p": "searchResult",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 100,
+        "wires": [
+            [
+                "b3440fb7.ad1c"
+            ]
+        ]
+    },
+    {
+        "id": "b3440fb7.ad1c",
+        "type": "function",
+        "z": "bd8c0993.1b12d8",
+        "name": "retrive watson response msg and set content",
+        "func": "\n// //combine http request result to watsonMsg\nswitch(msg.watsonMsg.intents[0].intent) {\n    case \"checkPrice\":\n        //\n        if(msg.salePrice) {\n            msg.watsonMsg.output.text += \"\\nThe price is \" + msg.salePrice + \" dollar.\";\n            msg.watsonMsg.output.text += \"\\n Would you like to order this item?\"\n        } else {\n            if(!msg.watsonMsg.itemNum) {\n                msg.watsonMsg.output.text += \"\\nCan you be more specific?\";\n            } else {\n                msg.watsonMsg.output.text += \"\\nThe price is not available online.\";                \n            }\n        }\n        break;\n    case \"searchItems\":\n        if(!msg.payload.items) {\n            msg.watsonMsg.output.text += \"\\nSorry we cannot find anything in this category, try a different name?\";\n        } else {\n            msg.watsonMsg.output.text += '\\nHere is what I found:\\n';\n            for(var i = 0; i <5; i++) {\n                if(msg.payload.items[i]) {\n                    msg.watsonMsg.output.text += \"\\n \" + (i+1) +\". \" + msg.payload.items[i].name;               \n                }\n            }\n            msg.watsonMsg.output.text += '\\n\\nYou can further send requests by saying \"How much is the first one.\"';\n        }\n        break;\n    case \"getDetails\":\n        //\n        if(msg.details) {\n            msg.watsonMsg.output.text += \"\\n\" + msg.details;\n        } else {\n            if(!msg.watsonMsg.itemNum) {\n                msg.watsonMsg.output.text += \"\\nCan you be more specific?\";\n            } else {\n                msg.watsonMsg.output.text += \"\\nSorry the description is not available online\"; \n            }            \n            \n        }        \n        break;\n    case \"getReviews\":\n        //\n        if(msg.payload){\n            msg.watsonMsg.output.text += \"\\nThe average rating for this product is: \" + msg.payload.reviewStatistics.averageOverallRating + \"/5, out of \" + msg.payload.reviewStatistics.totalReviewCount + \" reviews\";\n        } else {\n            if(!msg.watsonMsg.itemNum) {\n                msg.watsonMsg.output.text += \"\\nCan you be more specific?\";\n            } else {\n                msg.watsonMsg.output.text += \"\\nSorry there is not review about this product yet.\";    \n            }\n            \n        }\n        break;\n    case \"checkOnlineStock\":\n        //\n        if(msg.stock) {\n            msg.watsonMsg.output.text += \"\\nThe stock status for this product is \" + msg.stock;\n        } else {\n            if(!msg.watsonMsg.itemNum) {\n                msg.watsonMsg.output.text += \"\\nCan you be more specific?\";\n            } else {\n               msg.watsonMsg.output.text += \"\\nSorry this info is not available online\"; \n            }\n            \n        }   \n        break;\n        \n    default:\n        msg.watsonMsg.output.text = msg.watsonMsg.output.text[0];\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1490,
+        "y": 200,
+        "wires": [
+            [
+                "6764101.6a900f"
+            ]
+        ]
+    },
+    {
+        "id": "3e5d4139.641e2e",
+        "type": "link in",
+        "z": "bd8c0993.1b12d8",
+        "name": "",
+        "links": [
+            "820fc1a4.e22c5"
+        ],
+        "x": 175,
+        "y": 80,
+        "wires": [
+            [
+                "1c294431.a40a5c"
+            ]
+        ]
+    },
+    {
+        "id": "6764101.6a900f",
+        "type": "link out",
+        "z": "bd8c0993.1b12d8",
+        "name": "",
+        "links": [
+            "754e95d4.8decec"
+        ],
+        "x": 1695,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "fc9644db.691ef8",
+        "type": "comment",
+        "z": "a2cf81e5.5b32e",
+        "name": "Receive msg from messenger",
+        "info": "",
+        "x": 140,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f7e9b574.3f3218",
+        "type": "comment",
+        "z": "a2cf81e5.5b32e",
+        "name": "Send msg to watson",
+        "info": "",
+        "x": 820,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a30ee4ce.e1fb68",
+        "type": "comment",
+        "z": "a2cf81e5.5b32e",
+        "name": "Receive msg from backend process and prepare to send back to the messenger",
+        "info": "",
+        "x": 420,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "693dff78.e1e49",
+        "type": "comment",
+        "z": "243db0ff.8861e",
+        "name": "receive msg from messenger and prepare to send to watson",
+        "info": "",
+        "x": 260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a82057d.a68cca8",
+        "type": "comment",
+        "z": "243db0ff.8861e",
+        "name": "Receive response from watson, prepare to let FRED do its tasks",
+        "info": "",
+        "x": 910,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "1cf45ced.bfde53",
+        "type": "comment",
+        "z": "bd8c0993.1b12d8",
+        "name": "Different functions that we want the bot to do for us",
+        "info": "",
+        "x": 570,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "f5e4ba9d.87b648",
+        "type": "comment",
+        "z": "bd8c0993.1b12d8",
+        "name": "receive response from watson",
+        "info": "",
+        "x": 180,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f9c9cc5c.8ef3e",
+        "type": "comment",
+        "z": "bd8c0993.1b12d8",
+        "name": "hitting walmart APIs",
+        "info": "",
+        "x": 1070,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c1aca087.c16ac",
+        "type": "comment",
+        "z": "bd8c0993.1b12d8",
+        "name": "combine the results back into the watson response",
+        "info": "",
+        "x": 1590,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "169c8bd8.2a4ca4",
+        "type": "template",
+        "z": "bd8c0993.1b12d8",
+        "name": "searchItems URL",
+        "field": "url",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "http://api.walmartlabs.com/v1/search?query={{searchItems}}&format=json&apiKey={{apikey}}",
+        "x": 770,
+        "y": 100,
+        "wires": [
+            [
+                "4f50b84f.6a0338"
+            ]
+        ]
+    },
+    {
+        "id": "e94a78ff.dacc78",
+        "type": "template",
+        "z": "bd8c0993.1b12d8",
+        "name": "getReviews URL",
+        "field": "url",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "http://api.walmartlabs.com/v1/reviews/{{itemId}}?format=json&apiKey={{apikey}}",
+        "x": 910,
+        "y": 300,
+        "wires": [
+            [
+                "8c6d0627.e1b158"
+            ]
+        ]
+    },
+    {
+        "id": "1c294431.a40a5c",
+        "type": "template",
+        "z": "bd8c0993.1b12d8",
+        "name": "walmart API key",
+        "field": "apikey",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<Your walmart API key>",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "81a4904c.874d2"
+            ]
+        ]
+    }
+]
