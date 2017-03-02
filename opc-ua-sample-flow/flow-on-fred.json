@@ -1,0 +1,518 @@
+[
+    {
+        "id": "24acf8e2.fe6b38",
+        "type": "mqtt in",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "topic": "users/{Your user name}/#",
+        "qos": "2",
+        "broker": "98f4ce7f.5e0f6",
+        "x": 137,
+        "y": 194,
+        "wires": [
+            [
+                "236141e.174bebe"
+            ]
+        ]
+    },
+    {
+        "id": "236141e.174bebe",
+        "type": "switch",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/oven/temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/oven/fan",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/oven/pressure",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/tank1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/tank2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/tank3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/sprayer1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/sprayer2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "users/{Your user name}/sprayer3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 9,
+        "x": 317,
+        "y": 257,
+        "wires": [
+            [
+                "e7d65e36.e6978"
+            ],
+            [
+                "e3700c43.24188"
+            ],
+            [
+                "b123d14e.4c025"
+            ],
+            [
+                "538a097c.d9ddd8"
+            ],
+            [
+                "9407c8bb.e730f8"
+            ],
+            [
+                "f0bbae65.e8a74"
+            ],
+            [
+                "8f042056.fb078"
+            ],
+            [
+                "1921411f.4899df"
+            ],
+            [
+                "49d88b7e.eb3974"
+            ]
+        ]
+    },
+    {
+        "id": "29ffe37a.a3449c",
+        "type": "ui_chart",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "group": "c3eb81f1.f0efb",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Oven",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 861,
+        "y": 76,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e7d65e36.e6978",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "oven-temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 683,
+        "y": 42,
+        "wires": [
+            [
+                "29ffe37a.a3449c"
+            ]
+        ]
+    },
+    {
+        "id": "e3700c43.24188",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "oven-fan",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 685,
+        "y": 79,
+        "wires": [
+            [
+                "29ffe37a.a3449c"
+            ]
+        ]
+    },
+    {
+        "id": "b123d14e.4c025",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "oven-pressure",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 685,
+        "y": 117,
+        "wires": [
+            [
+                "29ffe37a.a3449c"
+            ]
+        ]
+    },
+    {
+        "id": "8eb3e754.d7b108",
+        "type": "ui_chart",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "group": "a9a79456.e05258",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Tank",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 867,
+        "y": 233,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "538a097c.d9ddd8",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "tank1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 688,
+        "y": 223,
+        "wires": [
+            [
+                "8eb3e754.d7b108"
+            ]
+        ]
+    },
+    {
+        "id": "9407c8bb.e730f8",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "tank2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 692,
+        "y": 264,
+        "wires": [
+            [
+                "8eb3e754.d7b108"
+            ]
+        ]
+    },
+    {
+        "id": "f0bbae65.e8a74",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "tank3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 693,
+        "y": 303,
+        "wires": [
+            [
+                "8eb3e754.d7b108"
+            ]
+        ]
+    },
+    {
+        "id": "c6f4b0ac.36cd2",
+        "type": "ui_chart",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "group": "db552a9b.bb8c38",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Sprayer",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 966,
+        "y": 376,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8f042056.fb078",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sprayer1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 696,
+        "y": 364,
+        "wires": [
+            [
+                "c6f4b0ac.36cd2",
+                "f6696d5b.910ef"
+            ]
+        ]
+    },
+    {
+        "id": "1921411f.4899df",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sprayer2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 405,
+        "wires": [
+            [
+                "c6f4b0ac.36cd2",
+                "f6696d5b.910ef"
+            ]
+        ]
+    },
+    {
+        "id": "49d88b7e.eb3974",
+        "type": "change",
+        "z": "1517cb17.a92165",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sprayer3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 696,
+        "y": 442,
+        "wires": [
+            [
+                "c6f4b0ac.36cd2"
+            ]
+        ]
+    },
+    {
+        "id": "f6696d5b.910ef",
+        "type": "function",
+        "z": "1517cb17.a92165",
+        "name": "Diff notification",
+        "func": "context.data = context.data || {};\n\nswitch (msg.topic) {\n    case \"sprayer1\":\n        context.data.sprayer1 = msg.payload;\n        msg = null;\n        break;\n    case \"sprayer2\":\n        context.data.sprayer2 = msg.payload;\n        msg = null;\n        break;\n    \n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.sprayer1 !== null && context.data.sprayer2 !== null ) {\n\tmsg2 = {};\n\tvar diff = context.data.sprayer2 - context.data.sprayer1;\n\tif (diff > 10){\n\t    msg2={\n\t        payload:\"Sprayer 2 is greater than Sprayer 1 by \"+diff\n\t    }\n\t    node.send(msg2);\n\t}\n} \nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1001,
+        "y": 438,
+        "wires": [
+            [
+                "c2c97a44.5e7548"
+            ]
+        ]
+    },
+    {
+        "id": "c2c97a44.5e7548",
+        "type": "ui_toast",
+        "z": "1517cb17.a92165",
+        "position": "top right",
+        "displayTime": "3",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "",
+        "x": 1219,
+        "y": 434,
+        "wires": []
+    },
+    {
+        "id": "98f4ce7f.5e0f6",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "mqtt.sensetecnic.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "c3eb81f1.f0efb",
+        "type": "ui_group",
+        "z": "",
+        "name": "OPC-UA",
+        "tab": "919fa34f.7d6f4",
+        "disp": true,
+        "width": "10"
+    },
+    {
+        "id": "a9a79456.e05258",
+        "type": "ui_group",
+        "z": "",
+        "name": "Tank",
+        "tab": "919fa34f.7d6f4",
+        "disp": true,
+        "width": "10"
+    },
+    {
+        "id": "db552a9b.bb8c38",
+        "type": "ui_group",
+        "z": "",
+        "name": "Sprayer",
+        "tab": "919fa34f.7d6f4",
+        "disp": true,
+        "width": "10"
+    },
+    {
+        "id": "919fa34f.7d6f4",
+        "type": "ui_tab",
+        "z": "",
+        "name": "OPC-UA",
+        "icon": "dashboard"
+    }
+]
