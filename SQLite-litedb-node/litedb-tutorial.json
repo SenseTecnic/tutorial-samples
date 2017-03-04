@@ -1,22 +1,21 @@
 [
     {
-        "id": "fd347a90.e36568",
+        "id": "35881632.6e706a",
         "type": "litedb",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "",
-        "x": 538.5,
-        "y": 151,
+        "x": 490,
+        "y": 140,
         "wires": [
             [
-                "329a8122.9cdffe",
-                "95ee3480.7a0f68"
+                "de6e047c.26add8"
             ]
         ]
     },
     {
-        "id": "40ce89ec.297be8",
+        "id": "cfe9844b.ad9ba8",
         "type": "inject",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "create database table",
         "topic": "CREATE TABLE RANDOMNUM( TIMESTAMP INT PRIMARY KEY NOT NULL, VALUE INT NOT NULL, BOOL INT NOT NULL)",
         "payload": "",
@@ -24,84 +23,84 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 151.5,
-        "y": 82,
+        "x": 140,
+        "y": 80,
         "wires": [
             [
-                "fd347a90.e36568"
+                "35881632.6e706a"
             ]
         ]
     },
     {
-        "id": "329a8122.9cdffe",
+        "id": "de6e047c.26add8",
         "type": "debug",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "",
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 728.5,
-        "y": 112,
+        "x": 680,
+        "y": 101,
         "wires": []
     },
     {
-        "id": "68977d13.c70564",
+        "id": "d59e6372.41336",
         "type": "inject",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "insert data",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "repeat": "15",
+        "repeat": "10",
         "crontab": "",
         "once": false,
-        "x": 126.5,
-        "y": 224,
+        "x": 130,
+        "y": 140,
         "wires": [
             [
-                "175b9dcd.a68c62"
+                "84ae8290.2be1c"
             ]
         ]
     },
     {
-        "id": "175b9dcd.a68c62",
+        "id": "84ae8290.2be1c",
         "type": "function",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "write query",
         "func": "var randomNum = Math.round(Math.random()*100);\nvar largeBool = (randomNum > 50)?1:0;\nvar newMsg = {\n \"topic\": \"INSERT INTO RANDOMNUM VALUES ( \" + msg.payload + \", \" + randomNum + \", \" + largeBool + \")\"\n}\n\nreturn newMsg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 286.5,
-        "y": 158,
+        "x": 310,
+        "y": 140,
         "wires": [
             [
-                "fd347a90.e36568"
+                "35881632.6e706a"
             ]
         ]
     },
     {
-        "id": "700fee84.01f47",
+        "id": "aa467606.c19cd8",
         "type": "inject",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "view records",
         "topic": "SELECT * FROM RANDOMNUM ORDER BY TIMESTAMP DESC LIMIT 100;",
         "payload": "",
         "payloadType": "date",
-        "repeat": "",
+        "repeat": "10",
         "crontab": "",
         "once": false,
-        "x": 122.5,
+        "x": 120,
         "y": 300,
         "wires": [
             [
-                "fd347a90.e36568"
+                "e2af09b3.78f348"
             ]
         ]
     },
     {
-        "id": "983e5775.e78ae8",
+        "id": "f0db6199.dbd34",
         "type": "inject",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "delete records",
         "topic": "DELETE FROM RANDOMNUM WHERE TIMESTAMP <= strftime('%s','now', '-1 hours')*1000",
         "payload": "",
@@ -109,18 +108,18 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 122.5,
-        "y": 370,
+        "x": 130,
+        "y": 200,
         "wires": [
             [
-                "fd347a90.e36568"
+                "35881632.6e706a"
             ]
         ]
     },
     {
-        "id": "6be71875.932928",
+        "id": "1620e82a.be3b58",
         "type": "inject",
-        "z": "cba366f7.12fae8",
+        "z": "e6691547.05bc98",
         "name": "show counts ",
         "topic": "SELECT COUNT(*) FROM RANDOMNUM",
         "payload": "",
@@ -128,37 +127,59 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 135.5,
-        "y": 433,
+        "x": 130,
+        "y": 240,
         "wires": [
             [
-                "fd347a90.e36568"
+                "35881632.6e706a"
             ]
         ]
     },
     {
-        "id": "95ee3480.7a0f68",
+        "id": "8284bec6.6187",
         "type": "ui_template",
-        "z": "cba366f7.12fae8",
-        "tab": "4d06f9cc.52f378",
+        "z": "e6691547.05bc98",
+        "group": "7a106693.b850b8",
         "name": "UI Table",
-        "group": "",
         "order": 1,
+        "width": "",
+        "height": "",
         "format": "<table style=\"width:100%\">\n  <tr>\n    <th>Index</th> \n    <th>Timestamp</th>\n    <th>Value</th> \n    <th>Bool</th>\n  </tr>\n  <tr ng-repeat=\"x in msg.payload | limitTo:20\">\n    <td>{{$index}}</td>\n    <td>{{msg.payload[$index].TIMESTAMP}}</td>\n    <td>{{msg.payload[$index].VALUE}}</td> \n    <td>{{msg.payload[$index].BOOL}}</td>\n  </tr>\n</table>",
         "storeOutMessages": true,
         "fwdInMessages": true,
-        "x": 731.5,
-        "y": 189,
+        "x": 680,
+        "y": 220,
         "wires": [
             []
         ]
     },
     {
-        "id": "4d06f9cc.52f378",
+        "id": "e2af09b3.78f348",
+        "type": "litedb",
+        "z": "e6691547.05bc98",
+        "name": "",
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "8284bec6.6187"
+            ]
+        ]
+    },
+    {
+        "id": "7a106693.b850b8",
+        "type": "ui_group",
+        "z": "",
+        "name": "table",
+        "tab": "a9cc4011.4f89a",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "a9cc4011.4f89a",
         "type": "ui_tab",
-        "z": "cba366f7.12fae8",
+        "z": "",
         "name": "Home",
-        "icon": "dashboard",
-        "order": "1"
+        "icon": "dashboard"
     }
 ]
