@@ -437,7 +437,7 @@
         "type": "function",
         "z": "1517cb17.a92165",
         "name": "Diff notification",
-        "func": "context.data = context.data || {};\n\nswitch (msg.topic) {\n    case \"sprayer1\":\n        context.data.sprayer1 = msg.payload;\n        msg = null;\n        break;\n    case \"sprayer2\":\n        context.data.sprayer2 = msg.payload;\n        msg = null;\n        break;\n    \n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.sprayer1 !== null && context.data.sprayer2 !== null ) {\n\tmsg2 = {};\n\tvar diff = context.data.sprayer2 - context.data.sprayer1;\n\tif (diff > 10){\n\t    msg2={\n\t        payload:\"Sprayer 2 is greater than Sprayer 1 by \"+diff\n\t    }\n\t    node.send(msg2);\n\t}\n} \nreturn;",
+        "func": "switch (msg.topic) {\n    case \"sprayer1\":\n        flow.set(\"sprayer1\", msg.payload);\n        msg = null;\n        break;\n    case \"sprayer2\":\n        flow.set(\"sprayer2\", msg.payload);\n        msg = null;\n        break;\n    \n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(flow.get(\"sprayer1\") !== null && flow.get(\"sprayer2\" ) {\n\tmsg2 = {};\n\tvar diff = flow.get(\"sprayer2\") - flow.get(\"sprayer1\")\n\tif (diff > 10){\n\t    msg2={\n\t        payload:\"Sprayer 2 is greater than Sprayer 1 by \"+diff\n\t    }\n\t    node.send(msg2);\n\t}\n} \nreturn;",
         "outputs": 1,
         "noerr": 0,
         "x": 1001,
