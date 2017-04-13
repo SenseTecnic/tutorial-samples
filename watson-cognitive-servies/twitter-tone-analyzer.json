@@ -1,0 +1,347 @@
+[
+    {
+        "id": "ea57b254.064e7",
+        "type": "function",
+        "z": "4bbf1e34.737f7",
+        "name": "Add the analyze score to total scores",
+        "func": "var defaultResult = {\n    \"emotion_tone\":{\n        \"Anger\":0,\n        \"Disgust\":0,\n        \"Joy\":0,\n        \"Sadness\":0,\n        \"Fear\":0\n    },\n    \"count\":0\n}\n\nif(msg.payload) {\n    \n    var result = context.get('twitterAnalyze')||defaultResult;\n    \n    msg.payload.document_tone.tone_categories.forEach(function(toneCategory){\n        if(toneCategory.tones){\n            toneCategory.tones.forEach(function(tone){\n                result[toneCategory.category_id][tone.tone_name] += tone.score;\n            })\n        }\n    })\n    result.count += 1;\n\n    context.set('twitterAnalyze', result);\n    \n    return {payload:result};\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 394,
+        "y": 329,
+        "wires": [
+            [
+                "6ebe659e.13311c"
+            ]
+        ]
+    },
+    {
+        "id": "6ebe659e.13311c",
+        "type": "function",
+        "z": "4bbf1e34.737f7",
+        "name": "Calculate the average",
+        "func": "if(msg.payload.count){\n    \n    msg.type = \"newMsg\";\n\n    for (var toneCatogory in msg.payload) {\n        // skip loop if the property is from prototype\n        if (!msg.payload.hasOwnProperty(toneCatogory)) continue;\n    \n        var obj = msg.payload[toneCatogory];\n        for (var prop in obj) {\n            // skip loop if the property is from prototype\n            if(!obj.hasOwnProperty(prop)) continue;\n    \n            obj[prop] = obj[prop]/msg.payload.count;\n        }\n    }    \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 678,
+        "y": 330,
+        "wires": [
+            [
+                "c127ce10.5753",
+                "688d68.2c2ec298",
+                "d5407ecf.47cfa",
+                "edc237ef.f4c598",
+                "adfe5851.814c08"
+            ]
+        ]
+    },
+    {
+        "id": "c127ce10.5753",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "Show Anger Score",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Anger",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.emotion_tone.Anger",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 264,
+        "wires": [
+            [
+                "d48f844e.2ebe38"
+            ]
+        ]
+    },
+    {
+        "id": "688d68.2c2ec298",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "Show Disgust Score",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Disgust",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.emotion_tone.Disgust",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 951,
+        "y": 299,
+        "wires": [
+            [
+                "d48f844e.2ebe38"
+            ]
+        ]
+    },
+    {
+        "id": "d5407ecf.47cfa",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "Show Joy Score",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Joy",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.emotion_tone.Joy",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 932,
+        "y": 333,
+        "wires": [
+            [
+                "d48f844e.2ebe38"
+            ]
+        ]
+    },
+    {
+        "id": "edc237ef.f4c598",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "Show Sadness Score",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Sadness",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.emotion_tone.Sadness",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 951,
+        "y": 367,
+        "wires": [
+            [
+                "d48f844e.2ebe38"
+            ]
+        ]
+    },
+    {
+        "id": "adfe5851.814c08",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "Show Fear Score",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Fear",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.emotion_tone.Fear",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 942,
+        "y": 402,
+        "wires": [
+            [
+                "d48f844e.2ebe38"
+            ]
+        ]
+    },
+    {
+        "id": "d48f844e.2ebe38",
+        "type": "ui_chart",
+        "z": "4bbf1e34.737f7",
+        "name": "",
+        "group": "cd2656a7.d7e078",
+        "order": 0,
+        "width": "15",
+        "height": "10",
+        "label": "#NationalPetDay Tweets Tone Analyzer",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "#NationalPetDay Tweets Tone Analyzer",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "x": 1149,
+        "y": 324,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b749b0c0.3652d",
+        "type": "watson-tone-analyzer-v3",
+        "z": "4bbf1e34.737f7",
+        "name": "",
+        "tones": "emotion",
+        "sentences": "true",
+        "contentType": "false",
+        "x": 474,
+        "y": 160,
+        "wires": [
+            [
+                "5a731af9.294da4"
+            ]
+        ]
+    },
+    {
+        "id": "5a731af9.294da4",
+        "type": "change",
+        "z": "4bbf1e34.737f7",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "response",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 685,
+        "y": 159,
+        "wires": [
+            [
+                "ea57b254.064e7"
+            ]
+        ]
+    },
+    {
+        "id": "d0857fe9.ef895",
+        "type": "twitter in",
+        "z": "4bbf1e34.737f7",
+        "twitter": "",
+        "tags": "#NationalPetDay",
+        "user": "false",
+        "name": "",
+        "topic": "tweets",
+        "inputs": 0,
+        "x": 100,
+        "y": 158,
+        "wires": [
+            [
+                "d528ca9c.0fe778"
+            ]
+        ]
+    },
+    {
+        "id": "d528ca9c.0fe778",
+        "type": "delay",
+        "z": "4bbf1e34.737f7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 279,
+        "y": 158,
+        "wires": [
+            [
+                "b749b0c0.3652d"
+            ]
+        ]
+    },
+    {
+        "id": "cd2656a7.d7e078",
+        "type": "ui_group",
+        "z": "",
+        "name": "Tone Analyzer",
+        "tab": "35f07ca9.847544",
+        "disp": true,
+        "width": "15"
+    },
+    {
+        "id": "35f07ca9.847544",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
