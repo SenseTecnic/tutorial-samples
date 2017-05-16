@@ -1,0 +1,238 @@
+[
+    {
+        "id": "ccb4b575.ddba08",
+        "type": "inject",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 266,
+        "y": 284,
+        "wires": [
+            [
+                "21c937c3.94c418"
+            ]
+        ]
+    },
+    {
+        "id": "21c937c3.94c418",
+        "type": "sts-mqtt-out",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "topic": "users/YourUsername/L",
+        "qos": "",
+        "retain": "",
+        "broker": "38670a75.d27f66",
+        "x": 470,
+        "y": 375,
+        "wires": []
+    },
+    {
+        "id": "4b7ff3e7.ed031c",
+        "type": "inject",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 238,
+        "y": 367,
+        "wires": [
+            [
+                "21c937c3.94c418"
+            ]
+        ]
+    },
+    {
+        "id": "fc61b397.902b3",
+        "type": "sts-mqtt-in",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "topic": "users/YourUsername/arduino/send/temperature",
+        "qos": "2",
+        "broker": "38670a75.d27f66",
+        "x": 359,
+        "y": 575,
+        "wires": [
+            [
+                "44d69885.3a0b68",
+                "3b03cca5.64de74"
+            ]
+        ]
+    },
+    {
+        "id": "aa75a4dd.fe7208",
+        "type": "sts-mqtt-in",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "topic": "users/YourUsername/arduino/send/humidity",
+        "qos": "2",
+        "broker": "38670a75.d27f66",
+        "x": 378,
+        "y": 639,
+        "wires": [
+            [
+                "9efa9d08.4d545",
+                "a704b460.efb388"
+            ]
+        ]
+    },
+    {
+        "id": "44d69885.3a0b68",
+        "type": "debug",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 626,
+        "y": 575,
+        "wires": []
+    },
+    {
+        "id": "9efa9d08.4d545",
+        "type": "debug",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 617,
+        "y": 634,
+        "wires": []
+    },
+    {
+        "id": "3b03cca5.64de74",
+        "type": "change",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 564,
+        "y": 702,
+        "wires": [
+            [
+                "9d0c8f10.a0f3c"
+            ]
+        ]
+    },
+    {
+        "id": "a704b460.efb388",
+        "type": "change",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Humidity",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 543,
+        "y": 753,
+        "wires": [
+            [
+                "9d0c8f10.a0f3c"
+            ]
+        ]
+    },
+    {
+        "id": "9d0c8f10.a0f3c",
+        "type": "ui_chart",
+        "z": "723f3ce1.b62d34",
+        "name": "",
+        "group": "953faf60.3138c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Arduino MQTT",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "x": 746,
+        "y": 731,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "38670a75.d27f66",
+        "type": "sts-mqtt-broker",
+        "z": "",
+        "broker": "mqtt.sensetecnic.com",
+        "port": "8883",
+        "clientid": "YOUR CLIENT ID",
+        "usetls": true,
+        "enableWillMsg": false,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "enableBirthMsg": false,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "953faf60.3138c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "c25fb91f.0f42f8",
+        "disp": true,
+        "width": "12"
+    },
+    {
+        "id": "c25fb91f.0f42f8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Arduino reading",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
