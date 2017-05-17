@@ -17,7 +17,8 @@
 #define mqtt_client_topic_send_temperature      "users/<Your Username>/arduino/send/temperature"
 #define mqtt_client_topic_send_humidity         "users/<Your Username>/arduino/send/humidity"
 #define mqtt_client_topic_receive_led           "users/<Your Username>/L"
-#define willMsg                                 "Arduino Client Connected"
+#define birthMsg                                "Arduino Client connected"
+#define willMsg                                 "Arduino Client disconnected"
 
 #define LEDpin 8
 #define DHTPIN 9
@@ -139,9 +140,9 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect, just a name to identify the client
-    if (client.connect(mqtt_client_id, mqtt_client_user, mqtt_client_pw)) {
+    if (client.connect(mqtt_client_id, mqtt_client_user, mqtt_client_pw, mqtt_client_topic_send_status, 1, 1, willMsg)) {
       Serial.println("connected");
-      client.publish(mqtt_client_topic_send_status, willMsg);
+      client.publish(mqtt_client_topic_send_status, birthMsg);
       Serial.println(client.subscribe(mqtt_client_topic_receive_led));
       
     } else {
