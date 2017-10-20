@@ -1,0 +1,112 @@
+[
+    {
+        "id": "11da1036.e0c13",
+        "type": "inject",
+        "z": "2ac899e4.08caf6",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "58a23b3d.008344",
+                "73f59189.1d72a"
+            ]
+        ]
+    },
+    {
+        "id": "58a23b3d.008344",
+        "type": "http request",
+        "z": "2ac899e4.08caf6",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "218ac345.4cb98c",
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "d7661424.0b6bf8"
+            ]
+        ]
+    },
+    {
+        "id": "d7661424.0b6bf8",
+        "type": "csv",
+        "z": "2ac899e4.08caf6",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "lat, lon, rssi, data-rate, name",
+        "x": 410,
+        "y": 300,
+        "wires": [
+            [
+                "eb2b831.af7538"
+            ]
+        ]
+    },
+    {
+        "id": "eb2b831.af7538",
+        "type": "worldmap",
+        "z": "2ac899e4.08caf6",
+        "name": "",
+        "lat": "49.266173",
+        "lon": "-123.098",
+        "zoom": "",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "73f59189.1d72a",
+        "type": "function",
+        "z": "2ac899e4.08caf6",
+        "name": "base station",
+        "func": "msg.payload = {\n    name: 'Base station',\n    lat:49.266173,\n    lon:-123.098693\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 360,
+        "wires": [
+            [
+                "eb2b831.af7538"
+            ]
+        ]
+    },
+    {
+        "id": "769778ed.7757d8",
+        "type": "comment",
+        "z": "2ac899e4.08caf6",
+        "name": "generage map ",
+        "info": "We had previously stored all data on a CSV file to show the data points.\nYou can store your data the same way or save them onto a database,\nand generate the datapoints the way you want. \n\nWe had ommited the csv file in this sample flow, but you can see the result \nimage to have an idea. ",
+        "x": 307.77777777777777,
+        "y": 235.55555555555554,
+        "wires": []
+    },
+    {
+        "id": "218ac345.4cb98c",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "verifyservercert": false
+    }
+]

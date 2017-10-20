@@ -1,0 +1,136 @@
+[
+    {
+        "id": "8dc31f49.e8a1d",
+        "type": "function",
+        "z": "e0580e83.09a8f",
+        "name": "read data from handheld tool gps",
+        "func": "var data_type = {\n\tnone_0 : 0,\n\ttemp_curr : 1,\n\tnone_1 : 2,\n\tgps_latitude : 3,\n\tgps_longitude : 7\n};\n\nvar gps_decode_index = 2147483647;\n\nvar data_struc = {\n\ttemperature : 0,\n\tlat_deg : 0 ,\n\tlong_deg : 0,\n};\n\npData = data_struc;\nvar msg_pntr = 0;\nvar temp = 0;\n\nvar loraPacket = msg.payload.payload;\n\nwhile (msg_pntr < loraPacket.length){\n    \n\tswitch (msg_pntr){\n        case data_type.none_0:\n            msg_pntr++;\n    \t\tbreak;\n        case data_type.none_1:\n            msg_pntr++;\n    \t\tbreak;\n    \tcase data_type.temp_curr:\n    \t\tpData.temperature = (loraPacket[msg_pntr] << 16) >> 16;\n    \t\tmsg_pntr++;\n    \t\tbreak;\n\n    \tcase data_type.gps_latitude:\n            pData.lat_deg = parseInt(loraPacket.toString('hex', 3, 7), 16);\n            pData.lat_deg = pData.lat_deg/gps_decode_index * 90\n            if (pData.lat_deg > 90) {\n                pData.lat_deg = pData.lat_deg - 90\n            }\n    \t\tmsg_pntr += 4;\n    \t\tbreak;\n    \tcase data_type.gps_longitude:\n            pData.long_deg = parseInt(loraPacket.toString('hex', 7, 11), 16);\n            pData.long_deg = pData.long_deg/gps_decode_index * 180;\n            if (pData.long_deg > 180) {\n                pData.long_deg = pData.long_deg - 360\n            }\n            msg_pntr += 4;\n    \t\tbreak;\n\tdefault:\n\t\tmsg_pntr++;\n\t}\n}\n\n\nmsg.pData = pData;\n\nreturn {payload:msg};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 400,
+        "wires": [
+            [
+                "588f722f.4bed8c"
+            ]
+        ]
+    },
+    {
+        "id": "f852b820.388478",
+        "type": "sts-mqtt-in",
+        "z": "e0580e83.09a8f",
+        "name": "",
+        "topic": "users/demouser/lorawan",
+        "qos": "2",
+        "broker": "2f09be8b.c1e352",
+        "x": 190,
+        "y": 400,
+        "wires": [
+            [
+                "8dc31f49.e8a1d"
+            ]
+        ]
+    },
+    {
+        "id": "588f722f.4bed8c",
+        "type": "function",
+        "z": "e0580e83.09a8f",
+        "name": "prepare ttn content to send back to telegram",
+        "func": "var telegram=flow.get('telegram')|| {};\n\n\ntelegram.payload.content = msg;\n\nreturn telegram;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 400,
+        "wires": [
+            [
+                "efc1430c.dd142"
+            ]
+        ]
+    },
+    {
+        "id": "efc1430c.dd142",
+        "type": "chatbot-telegram-send",
+        "z": "e0580e83.09a8f",
+        "bot": "5687554f.8e27ec",
+        "track": false,
+        "outputs": 0,
+        "x": 970,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7fc8aca5.7b17f4",
+        "type": "chatbot-telegram-receive",
+        "z": "e0580e83.09a8f",
+        "bot": "5687554f.8e27ec",
+        "x": 210,
+        "y": 500,
+        "wires": [
+            [
+                "4ce9727d.b695fc"
+            ]
+        ]
+    },
+    {
+        "id": "4ce9727d.b695fc",
+        "type": "function",
+        "z": "e0580e83.09a8f",
+        "name": "save msg",
+        "func": "flow.set('telegram', msg);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 601,
+        "y": 499,
+        "wires": [
+            [
+                "efc1430c.dd142"
+            ]
+        ]
+    },
+    {
+        "id": "f46da79a.de7598",
+        "type": "comment",
+        "z": "e0580e83.09a8f",
+        "name": "receive msg from STS-MQTT, decode the buffer LoRaWAN msg",
+        "info": "",
+        "x": 370,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "a0ac3f1.5f93ec",
+        "type": "comment",
+        "z": "e0580e83.09a8f",
+        "name": "set up telegram to view msg on phone",
+        "info": "1. You need to setup the bot on telegram. \n   You might be able to fine more info here:https://telegram.org/blog/bot-revolution\n\n2. In order to send message to telegram, we need msg id, token etc.\n   So we need to store an initial msg from our phone in global context,\n   and then replace the new msg into the payload content of the stored msg.\n",
+        "x": 390,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "2f09be8b.c1e352",
+        "type": "sts-mqtt-broker",
+        "z": "",
+        "broker": "mqtt.sensetecnic.com",
+        "port": "8883",
+        "clientid": "demouser_client_id",
+        "usetls": true,
+        "enableWillMsg": false,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "enableBirthMsg": false,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "5687554f.8e27ec",
+        "type": "chatbot-telegram-node",
+        "z": "",
+        "botname": "sts_testing_bot",
+        "usernames": "",
+        "polling": "1000",
+        "log": ""
+    }
+]

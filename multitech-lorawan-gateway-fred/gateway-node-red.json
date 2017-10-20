@@ -1,0 +1,87 @@
+[
+    {
+        "id": "e437effd.12795",
+        "type": "lora in",
+        "z": "2ef93b9f.1927b4",
+        "name": "",
+        "datatype": "bytes",
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "e3bb8ee3.fe298"
+            ]
+        ]
+    },
+    {
+        "id": "5fc36e31.3b4fd",
+        "type": "mqtt out",
+        "z": "2ef93b9f.1927b4",
+        "name": "",
+        "topic": "users/demouser/lorawan",
+        "qos": "",
+        "retain": "true",
+        "broker": "48375ddc.656bc4",
+        "x": 670,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d06a08ee.9de868",
+        "type": "comment",
+        "z": "2ef93b9f.1927b4",
+        "name": "forward lorawan packets to STS-MQTT",
+        "info": "",
+        "x": 470,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e3bb8ee3.fe298",
+        "type": "function",
+        "z": "2ef93b9f.1927b4",
+        "name": "",
+        "func": "var newMsg = {\n    payload: msg  \n};\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "5fc36e31.3b4fd"
+            ]
+        ]
+    },
+    {
+        "id": "48375ddc.656bc4",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "mqtt.sensetecnic.com",
+        "port": "8883",
+        "tls": "218ac345.4cb98c",
+        "clientid": "",
+        "usetls": true,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "218ac345.4cb98c",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "verifyservercert": false
+    }
+]
