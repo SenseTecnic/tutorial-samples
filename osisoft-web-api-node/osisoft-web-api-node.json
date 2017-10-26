@@ -835,7 +835,7 @@
         "type": "web-api-client",
         "z": "",
         "name": "",
-        "serverURL": "52.24.14.8/piwebapi",
+        "serverURL": "<your-server-address>/piwebapi",
         "authenticateMethod": "basic",
         "usetls": true,
         "tls": "55ecb1b6.9f59f"
