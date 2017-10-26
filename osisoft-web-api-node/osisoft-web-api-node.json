@@ -1,0 +1,893 @@
+[
+    {
+        "id": "42a01f0e.99bbc",
+        "type": "darksky",
+        "z": "30d3f7c2.036a78",
+        "darksky": "",
+        "name": "",
+        "lon": "-123.1207",
+        "lat": "49.2827",
+        "date": "",
+        "time": "",
+        "mode": "message",
+        "lang": "en",
+        "units": "si",
+        "x": 359,
+        "y": 280,
+        "wires": [
+            [
+                "1259dfb1.8e408",
+                "9cf07ff8.5745b",
+                "bab720e.aa196e",
+                "6d4f19f9.170c98",
+                "93d9258f.3c01a8",
+                "6498d98e.7fa9d8"
+            ]
+        ]
+    },
+    {
+        "id": "d8983a17.7ae7e8",
+        "type": "inject",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "x": 154,
+        "y": 124,
+        "wires": [
+            [
+                "eb6158e5.70bb88"
+            ]
+        ]
+    },
+    {
+        "id": "eb6158e5.70bb88",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "move smg.payload to msg.time ",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "time",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 189,
+        "y": 200,
+        "wires": [
+            [
+                "42a01f0e.99bbc"
+            ]
+        ]
+    },
+    {
+        "id": "245c2216.b8e3ce",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1259dfb1.8e408",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.summary",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 180,
+        "wires": [
+            [
+                "f587e5fc.f21b78"
+            ]
+        ]
+    },
+    {
+        "id": "f587e5fc.f21b78",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to summary",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "summary",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 769,
+        "y": 180,
+        "wires": [
+            [
+                "245c2216.b8e3ce"
+            ]
+        ]
+    },
+    {
+        "id": "5c7aeedd.2115f",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to humidity",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "humidity",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 759,
+        "y": 220,
+        "wires": [
+            [
+                "a5e867c5.b1d498"
+            ]
+        ]
+    },
+    {
+        "id": "ed8d5303.ac3dd",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to pressure",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "pressure",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 759,
+        "y": 260,
+        "wires": [
+            [
+                "938d369b.aa1f88"
+            ]
+        ]
+    },
+    {
+        "id": "f54323b8.d6e9d",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to temperature",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "temperature",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 779,
+        "y": 300,
+        "wires": [
+            [
+                "da85d236.1ef04"
+            ]
+        ]
+    },
+    {
+        "id": "fb6cdc5c.fa972",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to visibility",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "visibility",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 759,
+        "y": 340,
+        "wires": [
+            [
+                "e7bc7ec6.b34ab"
+            ]
+        ]
+    },
+    {
+        "id": "85f9012b.469f3",
+        "type": "web-api-write",
+        "z": "30d3f7c2.036a78",
+        "name": "write to windSpeed",
+        "server": "9ad93bac.b05648",
+        "writeMethod": "path",
+        "webId": "",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "windSpeed",
+        "customUrl": "",
+        "requestMethod": "POST",
+        "x": 769,
+        "y": 380,
+        "wires": [
+            [
+                "8732c0aa.a92ed"
+            ]
+        ]
+    },
+    {
+        "id": "a5e867c5.b1d498",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "938d369b.aa1f88",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "da85d236.1ef04",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e7bc7ec6.b34ab",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8732c0aa.a92ed",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 969,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9cf07ff8.5745b",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.humidity",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 220,
+        "wires": [
+            [
+                "5c7aeedd.2115f"
+            ]
+        ]
+    },
+    {
+        "id": "bab720e.aa196e",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.pressure",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 260,
+        "wires": [
+            [
+                "ed8d5303.ac3dd"
+            ]
+        ]
+    },
+    {
+        "id": "6d4f19f9.170c98",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.temperature",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 300,
+        "wires": [
+            [
+                "f54323b8.d6e9d"
+            ]
+        ]
+    },
+    {
+        "id": "93d9258f.3c01a8",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.visibility",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 340,
+        "wires": [
+            [
+                "fb6cdc5c.fa972"
+            ]
+        ]
+    },
+    {
+        "id": "6498d98e.7fa9d8",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "data.currently.windSpeed",
+                "pt": "msg",
+                "to": "payload.Value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 559,
+        "y": 380,
+        "wires": [
+            [
+                "85f9012b.469f3"
+            ]
+        ]
+    },
+    {
+        "id": "c41bb5f7.307e08",
+        "type": "web-api-query",
+        "z": "30d3f7c2.036a78",
+        "name": "query for temperature",
+        "server": "9ad93bac.b05648",
+        "queryMethod": "path",
+        "webId": "A0E_JhZTxhSSkuVHogDwOpMawcprAOM655xGplQKnCcpnAgEsKnTQPR3VoAFCk7eir0rARUMyQU1BWi05SEVKVlRMXFdFQVRIRVJcV0VBVEhFUl9GUk9NX05PREVfUkVEfFRFTVBFUkFUVVJF",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "temperature",
+        "dataType": "recorded",
+        "customUrl": "",
+        "x": 399,
+        "y": 540,
+        "wires": [
+            [
+                "eabe74bd.748bd8"
+            ]
+        ]
+    },
+    {
+        "id": "101858e1.6e0f57",
+        "type": "inject",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 193,
+        "y": 541,
+        "wires": [
+            [
+                "c41bb5f7.307e08"
+            ]
+        ]
+    },
+    {
+        "id": "eabe74bd.748bd8",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 569,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "33aa7ea9.c5ee72",
+        "type": "web-api-query",
+        "z": "30d3f7c2.036a78",
+        "name": "query all attributes",
+        "server": "9ad93bac.b05648",
+        "queryMethod": "custom",
+        "webId": "",
+        "piDB": "",
+        "piTag": "",
+        "dataType": "",
+        "customUrl": "/streamsets/E0_JhZTxhSSkuVHogDwOpMawcprAOM655xGplQKnCcpnAgRUMyQU1BWi05SEVKVlRMXFdFQVRIRVJcV0VBVEhFUl9GUk9NX05PREVfUkVE/value",
+        "x": 389,
+        "y": 580,
+        "wires": [
+            [
+                "644f00bf.b33ab",
+                "321504de.13fbbc"
+            ]
+        ]
+    },
+    {
+        "id": "fb32eadc.d5d8a8",
+        "type": "inject",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "x": 209,
+        "y": 580,
+        "wires": [
+            [
+                "33aa7ea9.c5ee72"
+            ]
+        ]
+    },
+    {
+        "id": "644f00bf.b33ab",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 569,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "321504de.13fbbc",
+        "type": "change",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "Items",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 538,
+        "y": 640,
+        "wires": [
+            [
+                "f0050d22.c56ef"
+            ]
+        ]
+    },
+    {
+        "id": "f0050d22.c56ef",
+        "type": "split",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 691,
+        "y": 639,
+        "wires": [
+            [
+                "bae41bab.381258"
+            ]
+        ]
+    },
+    {
+        "id": "bae41bab.381258",
+        "type": "function",
+        "z": "30d3f7c2.036a78",
+        "name": "prepare data for chart",
+        "func": "var newMsg = {\n    topic:msg.payload.Name,\n    payload:msg.payload.Value.Value\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 818,
+        "y": 685,
+        "wires": [
+            [
+                "1d40662c.d6141a"
+            ]
+        ]
+    },
+    {
+        "id": "1ddf93c1.9ff16c",
+        "type": "ui_chart",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "group": "55284e45.215fa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Latest values",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 1205,
+        "y": 691,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1d40662c.d6141a",
+        "type": "switch",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "pressure",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "pressure",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1002,
+        "y": 700,
+        "wires": [
+            [
+                "1ddf93c1.9ff16c"
+            ],
+            [
+                "f88a20dd.01e9"
+            ]
+        ]
+    },
+    {
+        "id": "f88a20dd.01e9",
+        "type": "ui_gauge",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "group": "32e56d10.b96042",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Pressure",
+        "label": "hPa",
+        "format": "{{value | number:2}}",
+        "min": "800",
+        "max": "2000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1194,
+        "y": 727,
+        "wires": []
+    },
+    {
+        "id": "7c32da63.758f74",
+        "type": "inject",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 180,
+        "y": 895,
+        "wires": [
+            [
+                "e3fae83.1544618"
+            ]
+        ]
+    },
+    {
+        "id": "e3fae83.1544618",
+        "type": "web-api-query",
+        "z": "30d3f7c2.036a78",
+        "name": "query for temperature recorded data",
+        "server": "9ad93bac.b05648",
+        "queryMethod": "path",
+        "webId": "A0E_JhZTxhSSkuVHogDwOpMawcprAOM655xGplQKnCcpnAgEsKnTQPR3VoAFCk7eir0rARUMyQU1BWi05SEVKVlRMXFdFQVRIRVJcV0VBVEhFUl9GUk9NX05PREVfUkVEfFRFTVBFUkFUVVJF",
+        "piDB": "EC2AMAZ-xxxxxxx",
+        "piTag": "temperature",
+        "dataType": "recorded",
+        "customUrl": "",
+        "x": 436,
+        "y": 894,
+        "wires": [
+            [
+                "1436b175.8619cf"
+            ]
+        ]
+    },
+    {
+        "id": "1436b175.8619cf",
+        "type": "function",
+        "z": "30d3f7c2.036a78",
+        "name": "prepare recorded temperature data",
+        "func": "var recordedValue = []\n\nmsg.Items.forEach(function(item) {\n    if(typeof item.Value !== 'object'){\n        recordedValue.push([item.Timestamp,item.Value])\n    }\n})\n\nvar newMsg = {\n    payload: [\n        {\n            key:\"temperature record\",\n            values:recordedValue\n        \n        }\n    ]\n}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 753,
+        "y": 939,
+        "wires": [
+            [
+                "1964771e.f9be59",
+                "bce6c1af.fbcd8"
+            ]
+        ]
+    },
+    {
+        "id": "1964771e.f9be59",
+        "type": "ui_chart",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "group": "f0a13350.df469",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "temperature recorded data",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 1099,
+        "y": 923,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bce6c1af.fbcd8",
+        "type": "debug",
+        "z": "30d3f7c2.036a78",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1073,
+        "y": 963,
+        "wires": []
+    },
+    {
+        "id": "9ad93bac.b05648",
+        "type": "web-api-client",
+        "z": "",
+        "name": "",
+        "serverURL": "52.24.14.8/piwebapi",
+        "authenticateMethod": "basic",
+        "usetls": true,
+        "tls": "55ecb1b6.9f59f"
+    },
+    {
+        "id": "55284e45.215fa",
+        "type": "ui_group",
+        "z": "",
+        "name": "Latest values",
+        "tab": "a39b7c1f.eee51",
+        "order": 1,
+        "disp": true,
+        "width": "15"
+    },
+    {
+        "id": "32e56d10.b96042",
+        "type": "ui_group",
+        "z": "",
+        "name": "pressure",
+        "tab": "a39b7c1f.eee51",
+        "order": 3,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "f0a13350.df469",
+        "type": "ui_group",
+        "z": "",
+        "name": "temperature record",
+        "tab": "a39b7c1f.eee51",
+        "order": 2,
+        "disp": true,
+        "width": "15"
+    },
+    {
+        "id": "55ecb1b6.9f59f",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "verifyservercert": false
+    },
+    {
+        "id": "a39b7c1f.eee51",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
